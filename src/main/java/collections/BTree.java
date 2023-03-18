@@ -102,7 +102,7 @@ public class BTree<T extends Comparable<T>> {
         }
     }
 
-    private Entry maxBST(Entry e) {
+    private Entry maxBST() {
         Entry maxBST = this.root;
         while (maxBST.right != null) {
             maxBST = maxBST.right;
@@ -165,6 +165,4 @@ public class BTree<T extends Comparable<T>> {
         }
         return x.parent;
     }
-
-
 }
