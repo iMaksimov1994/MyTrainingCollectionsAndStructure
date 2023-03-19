@@ -83,11 +83,13 @@ public class BTree<T extends Comparable<T>> {
     }
 
     private Entry minBST(Entry e) {
-        Entry minBST = this.root;
-        while (minBST.left != null) {
-            minBST = minBST.left;
+        Entry minBst = e;
+        if (e != null) {
+            while (minBst.left != null) {
+                minBst = minBst.left;
+            }
         }
-        return minBST;
+        return minBst;
     }
 
     public T max() {
@@ -102,12 +104,14 @@ public class BTree<T extends Comparable<T>> {
         }
     }
 
-    private Entry maxBST() {
-        Entry maxBST = this.root;
-        while (maxBST.right != null) {
-            maxBST = maxBST.right;
+    private Entry maxBST(Entry e) {
+        Entry maxBst = e;
+        if (e != null) {
+            while (maxBst.right != null) {
+                maxBst = maxBst.right;
+            }
         }
-        return maxBST;
+        return maxBst;
     }
 
     public Entry findEntity(T value) {
@@ -164,5 +168,15 @@ public class BTree<T extends Comparable<T>> {
             x = x.parent;
         }
         return x.parent;
+    }
+
+    public Entry predecessor(Entry entry) {
+        if (entry.left != null) {
+            return maxBST(entry.left);
+        }
+        while (entry != root && entry == entry.parent.left) {
+            entry = entry.parent;
+        }
+        return entry.parent;
     }
 }
