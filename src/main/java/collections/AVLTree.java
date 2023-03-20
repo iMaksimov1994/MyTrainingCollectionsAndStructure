@@ -2,9 +2,9 @@ package collections;
 
 public class AVLTree<T extends Comparable<T>> {
     class Entry {
-        T key;
-        Entry parent, left, right;
-        int height;
+        private final T key;
+        private Entry parent, left, right;
+        private int height;
 
         public Entry(T value) {
             key = value;
@@ -17,19 +17,19 @@ public class AVLTree<T extends Comparable<T>> {
         }
     }
 
-    Entry root;
+    private Entry root;
 
     public AVLTree() {
         root = null;
     }
 
-    int getHeight(Entry x) {
+    private int getHeight(Entry x) {
         if (x == null)
             return 0;
         return x.height;
     }
 
-    void rightRotate(Entry x) {
+    private void rightRotate(Entry x) {
         Entry y = x.left;
         if (x.parent == null)
             root = y;
@@ -47,7 +47,7 @@ public class AVLTree<T extends Comparable<T>> {
         y.setHeight();
     }
 
-    void LeftRotate(Entry x) {
+    private void LeftRotate(Entry x) {
         Entry y = x.right;
         if (x.parent == null)
             root = y;
@@ -65,13 +65,13 @@ public class AVLTree<T extends Comparable<T>> {
         y.setHeight();
     }
 
-    int getSize(Entry x) {
+    private int getSize(Entry x) {
         if (x == null)
             return 0;
         return 1 + getSize(x.left) + getSize(x.right);
     }
 
-    void insertAVL(T value) {
+    public void insertAVL(T value) {
         Entry x = root;
         Entry y = null;
         while (x != null) {
@@ -95,7 +95,7 @@ public class AVLTree<T extends Comparable<T>> {
         }
     }
 
-    void correctBalance(Entry y) {
+    private void correctBalance(Entry y) {
         y.setHeight();
         int balance = getHeight(y.left) - getHeight(y.right);
         if (balance == 2) {
@@ -109,7 +109,7 @@ public class AVLTree<T extends Comparable<T>> {
         }
     }
 
-    void printAVL(Entry x) {
+    public void printAVL(Entry x) {
         if (x != null) {
             printAVL(x.left);
             System.out.print(x.key + " ");
@@ -118,7 +118,7 @@ public class AVLTree<T extends Comparable<T>> {
         }
     }
 
-    void Transplant(Entry u, Entry v) {
+    private void Transplant(Entry u, Entry v) {
         if (v != null)
             v.parent = u.parent;
         if (u.parent == null)
@@ -129,7 +129,7 @@ public class AVLTree<T extends Comparable<T>> {
             u.parent.right = v;
     }
 
-    Entry minAVL(Entry z) {
+    private Entry minAVL(Entry z) {
         if (z == null)
             return null;
         while (z.left != null)
@@ -137,7 +137,7 @@ public class AVLTree<T extends Comparable<T>> {
         return z;
     }
 
-    Entry searchAVL(T value) {
+    private Entry searchAVL(T value) {
         Entry x = root;
         while (x != null && x.key != value) {
             if (value.compareTo(x.key) < 0)
@@ -148,7 +148,7 @@ public class AVLTree<T extends Comparable<T>> {
         return x;
     }
 
-    void deleteAVL(T value) {
+    public void deleteAVL(T value) {
         Entry z = searchAVL(value);
         if (z == null) return;
         Entry repair = z.parent;
