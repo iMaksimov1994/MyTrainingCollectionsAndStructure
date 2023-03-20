@@ -1,12 +1,12 @@
 package collections;
 
-public class AVLTree {
+public class AVLTree<T extends Comparable<T>> {
     class Entry {
-        int key;
+        T key;
         Entry parent, left, right;
         int height;
 
-        public Entry(int value) {
+        public Entry(T value) {
             key = value;
             parent = right = left = null;
             height = 1;
@@ -71,12 +71,12 @@ public class AVLTree {
         return 1 + getSize(x.left) + getSize(x.right);
     }
 
-    void insertAVL(int value) {
+    void insertAVL(T value) {
         Entry x = root;
         Entry y = null;
         while (x != null) {
             y = x;
-            if (value < x.key)
+            if (value.compareTo(x.key) < 0)
                 x = x.left;
             else
                 x = x.right;
@@ -85,7 +85,7 @@ public class AVLTree {
         z.parent = y;
         if (root == null)
             root = z;
-        else if (z.key < y.key)
+        else if (z.key.compareTo(y.key) < 0)
             y.left = z;
         else
             y.right = z;
@@ -137,10 +137,10 @@ public class AVLTree {
         return z;
     }
 
-    Entry searchAVL(int value) {
+    Entry searchAVL(T value) {
         Entry x = root;
         while (x != null && x.key != value) {
-            if (value < x.key)
+            if (value.compareTo(x.key) < 0)
                 x = x.left;
             else
                 x = x.right;
@@ -148,7 +148,7 @@ public class AVLTree {
         return x;
     }
 
-    void deleteAVL(int value) {
+    void deleteAVL(T value) {
         Entry z = searchAVL(value);
         if (z == null) return;
         Entry repair = z.parent;
